@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" xmlns="https://logging.apache.org/xml/ns"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="
+                   https://logging.apache.org/xml/ns
+                   https://logging.apache.org/xml/ns/log4j-config-2.xsd">
+
+    <Properties>
+        <Property name="LOG_PATTERN"
+                  value="%-5d %p %c: %m%n"/>
+    </Properties>
+
+    <Appenders>
+        <RollingFile name="FILE"
+                     fileName="logs/hippodrome.log"
+                     filePattern="logs/hippodrome.%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <DefaultRolloverStrategy>
+                <Delete basePath="logs">
+                    <IfFileName regex="hippodrome\.\d{4}-\d{2}-\d{2}\.log"/>
+                    <IfLastModified age="P7D"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+            <TimeBasedTriggeringPolicy interval="1"/>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="DEBUG">
+            <AppenderRef ref="FILE"/>
+        </Root>
+    </Loggers>
+</Configuration>
