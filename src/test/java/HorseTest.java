@@ -32,17 +32,17 @@ class HorseTest {
     class ConstructorTest {
 
         @Test
-        @DisplayName("When first null parameter then throw IAE")
-        void whenFirstNullParameter_thenThrowIAE() {
+        @DisplayName("When name null then throw IAE")
+        void whenNameNull_thenThrowIAE() {
             assertThrows(IllegalArgumentException.class, () ->
-                    createObjectWithFirstParameter(null));
+                    createObjectForName(null));
         }
 
         @Test
-        @DisplayName("When first null parameter then message exception \"Name cannot be null.\"")
-        void whenFirstNullParameter_thenThrowMessage() {
+        @DisplayName("When name null then message exception \"Name cannot be null.\"")
+        void whenNameNull_thenThrowMessage() {
             try {
-                createObjectWithFirstParameter(null);
+                createObjectForName(null);
             } catch (IllegalArgumentException e) {
                 assertEquals("Name cannot be null.", e.getMessage());
             }
@@ -50,63 +50,57 @@ class HorseTest {
 
         @ParameterizedTest
         @ValueSource(strings = {" ", "\t", "\n", "\f", "\r",})
-        @DisplayName("When space char then return throw IAE")
-        void whenSpaceChars_thenReturnThrowIAE(String argument) {
+        @DisplayName("When name is blank then return throw IAE")
+        void whenNameIsBlank_thenReturnThrowIAE(String argument) {
             assertThrows(IllegalArgumentException.class, () ->
-                    createObjectWithFirstParameter(argument));
+                    createObjectForName(argument));
         }
 
         @ParameterizedTest
         @ValueSource(strings = {" ", "\t", "\n", "\f", "\r",})
-        @DisplayName("When space char then return message exception \"Name cannot be blank.\"")
-        void whenSpaceChars_thenThrowMessage(String argument) {
+        @DisplayName("When name is blank then return message exception \"Name cannot be blank.\"")
+        void whenNameIsBlank_thenThrowMessage(String argument) {
             try {
-                createObjectWithFirstParameter(argument);
+                createObjectForName(argument);
             } catch (IllegalArgumentException e) {
                 assertEquals("Name cannot be blank.", e.getMessage());
             }
         }
 
-
-
-
         @Test
-        @DisplayName("When second parameter negative then throw IAE")
-        void whenSecondParameterNegative_thenThrowIAE() {
+        @DisplayName("When speed is negative then throw IAE")
+        void whenSpeedIsNegative_thenThrowIAE() {
             assertThrows(IllegalArgumentException.class, () ->
-                    createObjectWithSecondParameter(-2));
+                    createObjectForSpeed(-2));
         }
 
         @Test
-        @DisplayName("When second negative parameter then return message exception \"Speed cannot be negative.\"")
-        void whenSecondNegativeParameter_thenThrowMessage() {
+        @DisplayName("When speed is negative negative then return message exception \"Speed cannot be negative.\"")
+        void whenSpeedIsNegative_thenThrowMessage() {
             try {
-                createObjectWithSecondParameter(-2);
+                createObjectForSpeed(-2);
             } catch (IllegalArgumentException e) {
                 assertEquals("Speed cannot be negative.", e.getMessage());
             }
         }
 
-
-
         @Test
-        @DisplayName("When third parameter negative then throw IAE")
+        @DisplayName("When distance is negative then throw IAE")
         void whenThirdParameterNegative_thenThrowIAE() {
             assertThrows(IllegalArgumentException.class, () ->
-                    createObjectWithThirdParameter(-20));
+                    createObjectForDistance(-20));
         }
 
         @Test
-        @DisplayName("When third negative parameter then message exception \"Distance cannot be negative.\"")
-        void whenThirdNegativeParameter_thenThrowMessage() {
+        @DisplayName("When distance is negative then message exception \"Distance cannot be negative.\"")
+        void whenDistanceIsNegative_thenThrowMessage() {
             try {
-                createObjectWithThirdParameter(-20);
+                createObjectForDistance(-20);
             } catch (IllegalArgumentException e) {
                 assertEquals("Distance cannot be negative.", e.getMessage());
             }
         }
     }
-
 
     @Nested
     @DisplayName("Methods test")
@@ -116,7 +110,7 @@ class HorseTest {
         @DisplayName("When call method getName then return first parameter constructor")
         void getName() {
             String firstParameter = "horse";
-            Horse horse = createObjectWithFirstParameter(firstParameter);
+            Horse horse = createObjectForName(firstParameter);
             assertEquals(firstParameter,horse.getName());
         }
 
@@ -124,7 +118,7 @@ class HorseTest {
         @DisplayName("When call method getSpeed then return second parameter constructor")
         void getSpeed() {
             int secondParameter = 2;
-            Horse horse = createObjectWithSecondParameter(secondParameter);
+            Horse horse = createObjectForSpeed(secondParameter);
             assertEquals(secondParameter,horse.getSpeed());
         }
 
@@ -132,7 +126,7 @@ class HorseTest {
         @DisplayName("When call method getDistance then return third parameter constructor")
         void getDistance() {
             int thirdParameter = 30;
-            Horse horse = createObjectWithThirdParameter(thirdParameter);
+            Horse horse = createObjectForDistance(thirdParameter);
             assertEquals(thirdParameter,horse.getDistance());
         }
 
@@ -147,7 +141,7 @@ class HorseTest {
         @DisplayName("When call method move then call static method getRandomDouble with parameter 0.2 and 0.9")
         void verifyCallGetRandomDoubleWithParameters() {
             // given
-            Horse horse = createObjectWithFirstParameter("horse");
+            Horse horse = createObjectForName("horse");
             // when
             horse.move();
             // then
@@ -177,14 +171,14 @@ class HorseTest {
 
     }
 
-    Horse createObjectWithFirstParameter(String firstParameter) {
-        return new Horse(firstParameter, 2, 20);
+    Horse createObjectForName(String name) {
+        return new Horse(name, 2, 20);
     }
-    Horse createObjectWithSecondParameter(int secondParameter) {
-        return new Horse("horse", secondParameter, 20);
+    Horse createObjectForSpeed(int speed) {
+        return new Horse("horse", speed, 20);
     }
-    Horse createObjectWithThirdParameter(int thirdParameter) {
-        return new Horse("horse", 20, thirdParameter);
+    Horse createObjectForDistance(int distance) {
+        return new Horse("horse", 20, distance);
     }
 
 }
