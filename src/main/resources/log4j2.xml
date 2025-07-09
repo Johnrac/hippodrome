@@ -7,7 +7,7 @@
 
     <Properties>
         <Property name="LOG_PATTERN"
-                  value="%-5d %p %c: %m%n"/>
+                  value="%d %-5p %c: %m%n"/>
     </Properties>
 
     <Appenders>
